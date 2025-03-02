@@ -6,3 +6,4 @@ numpy==1.21.2
 openpyxl==3.0.7
 gunicorn==20.1.0
 chardet==4.0.0
+Werkzeug==2.1.0
