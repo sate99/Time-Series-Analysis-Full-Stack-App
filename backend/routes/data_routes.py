@@ -10,7 +10,7 @@ from utils.data_processing import process_file
 data_bp = Blueprint('data', __name__)
 
 # Endpoint: Upload & Process Data
-@data_bp.route('/upload', methods=['POST'])
+@data_bp.route('/api/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file uploaded'}), 400
@@ -50,7 +50,7 @@ def upload_file():
         return jsonify({'error': str(e)}), 500
 
 # Endpoint: Fetch Cleaned & Analyzed Data for Charts
-@data_bp.route('/cleaned-data', methods=['GET'])
+@data_bp.route('/api/cleaned-data', methods=['GET'])
 def get_cleaned_data():
     try:
         result = db.session.execute(text("SELECT * FROM analysis_data"))
@@ -60,7 +60,7 @@ def get_cleaned_data():
         return jsonify({'error': str(e)}), 500
 
 # Endpoint: Filter Data Based on Time Delta (Daily, Weekly, Monthly)
-@data_bp.route('/filtered-data', methods=['GET'])
+@data_bp.route('/api/filtered-data', methods=['GET'])
 def get_filtered_data():
     try:
         filter_type = request.args.get('type', 'daily')

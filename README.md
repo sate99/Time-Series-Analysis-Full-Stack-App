@@ -1,15 +1,13 @@
-# Time-Series-Analysis-Full-Stack-App
+# Time Series Data Upload & Visualization
 
-## Overview
-
-This is a full-stack application for time series analysis. The backend is built with Flask and provides APIs for data processing and analysis. The frontend (if applicable) can be built with any framework of your choice.
+This project is a full-stack application for uploading, processing, and visualizing time series data. The backend is built with Flask, and the frontend is built with React.
 
 ## Features
 
-- Data ingestion and storage
-- Data cleaning and preprocessing
-- Time series analysis (e.g., moving average, trend analysis)
-- RESTful APIs for data access and manipulation
+- Upload CSV or Excel files containing time series data
+- Process and clean the uploaded data
+- Visualize the cleaned and analyzed data
+- Filter data based on time intervals (daily, weekly, monthly)
 
 ## Technologies Used
 
@@ -24,37 +22,36 @@ This is a full-stack application for time series analysis. The backend is built 
 - chardet
 - Werkzeug
 - psycopg2-binary
+- React
 
-## Setup and Installation
+## Prerequisites
 
-### Prerequisites
-
-- Python 3.9.7
+- Python 3.9.6
+- Node.js and npm
 - PostgreSQL database
 
-### Installation
+## Setup
 
-1. Clone the repository:
+### Backend
 
+1. **Navigate to the backend directory**:
     ```sh
-    git clone https://github.com/your_username/Time-Series-Analysis-Full-Stack-App.git
-    cd Time-Series-Analysis-Full-Stack-App
+    cd /Users/satendra/sate99/Time-Series-Analysis-Full-Stack-App/backend
     ```
 
-2. Create and activate a virtual environment:
-
+2. **Create and activate a virtual environment**:
     ```sh
     python3 -m venv venv
     source venv/bin/activate
     ```
 
-3. Install the dependencies:
-
+3. **Install the dependencies**:
     ```sh
+    pip install --upgrade pip setuptools wheel
     pip install -r requirements.txt
     ```
 
-4. Set up the database:
+4. **Set up the database**:
 
     Ensure you have a PostgreSQL database set up and update the database URI in `config.py`:
 
@@ -62,10 +59,26 @@ This is a full-stack application for time series analysis. The backend is built 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@host:port/database_name'
     ```
 
-5. Run the application:
-
+5. **Run the Flask application**:
     ```sh
-    gunicorn -w 4 -b 0.0.0.0:8000 app:app
+    python app.py
+    ```
+
+### Frontend
+
+1. **Navigate to the frontend directory**:
+    ```sh
+    cd /Users/satendra/sate99/Time-Series-Analysis-Full-Stack-App/frontend
+    ```
+
+2. **Install the dependencies**:
+    ```sh
+    npm install
+    ```
+
+3. **Start the React application**:
+    ```sh
+    npm start
     ```
 
 ## Deployment
@@ -90,13 +103,39 @@ This is a full-stack application for time series analysis. The backend is built 
 
 4. Set any required environment variables (e.g., database credentials) in the Render dashboard under the "Environment" tab for your service.
 
-## Usage
+## API Endpoints
 
-### API Endpoints
+### Upload & Process Data
 
-- `GET /api/data`: Retrieve data
-- `POST /api/data`: Upload data
-- `GET /api/analysis`: Retrieve analysis results
+- **URL**: `/api/upload`
+- **Method**: `POST`
+- **Description**: Upload and process a CSV or Excel file containing time series data.
+
+### Fetch Cleaned & Analyzed Data for Charts
+
+- **URL**: `/api/cleaned-data`
+- **Method**: `GET`
+- **Description**: Fetch the cleaned and analyzed data for visualization.
+
+### Filter Data Based on Time Delta (Daily, Weekly, Monthly)
+
+- **URL**: `/api/filtered-data`
+- **Method**: `GET`
+- **Description**: Filter the data based on the specified time interval (daily, weekly, monthly).
+
+## Configuration
+
+### Flask Configuration
+
+The Flask configuration can be set in the [config.py](http://_vscodecontentref_/1) file. You can also use environment variables to configure the application.
+
+### Environment Variables
+
+Create a `.env` file in the backend directory to set environment variables. For example:
+
+```plaintext
+BASE_URL=http://localhost:5000
+```
 
 ## Contributing
 
