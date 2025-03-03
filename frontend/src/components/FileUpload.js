@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Card, CardContent, Typography, Box, Alert, IconButton } from "@mui/material";
+import { Button, Card, CardContent, Typography, Box, Alert, IconButton, CircularProgress } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const FileUpload = ({ handleFileChange, handleUpload, fileInputRef, error, setError }) => {
+const FileUpload = ({ handleFileChange, handleUpload, fileInputRef, error, setError, disabled }) => {
   const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -51,7 +52,9 @@ const FileUpload = ({ handleFileChange, handleUpload, fileInputRef, error, setEr
       return;
     }
     setError(null);
+    setLoading(true);
     await handleUpload();
+    setLoading(false);
   };
 
   const handleRemoveFile = (e) => {
@@ -106,10 +109,10 @@ const FileUpload = ({ handleFileChange, handleUpload, fileInputRef, error, setEr
           color="primary"
           onClick={handleUploadClick}
           style={{ marginTop: "10px" }}
-          startIcon={<CloudUploadIcon />}
-          disabled={!!error} // Disable the upload button if there is an error
+          startIcon={loading ? <CircularProgress size={24} /> : <CloudUploadIcon />}
+          disabled={!!error || loading || disabled} // Disable the upload button if there is an error, loading, or disabled
         >
-          Upload
+          {loading ? "Uploading..." : "Upload"}
         </Button>
         {error && <Alert severity="error" style={{ marginTop: "10px" }}>{error}</Alert>}
       </CardContent>

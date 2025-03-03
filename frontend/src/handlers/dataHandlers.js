@@ -27,17 +27,16 @@ export const handleFileChange = (event, setFile, setUploadError, setShowCleanedD
   }
 };
 
-export const handleUpload = async (file, setLoading, setUploadDisabled, fetchFilteredData, fetchCleanedData, setUploadError, setShowCleanedData, setShowFilteredData, setFile, fileInputRef) => {
+export const handleUpload = async (file, setUploadDisabled, fetchFilteredData, fetchCleanedData, setUploadError, setShowCleanedData, setShowFilteredData, setFile, fileInputRef) => {
   if (!file) {
     setUploadError(SELECT_FILE_FIRST);
-    return;
+    return false;
   }
 
   const formData = new FormData();
   formData.append("file", file);
 
   try {
-    setLoading(true);
     setUploadDisabled(true);
     await api.post("/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -51,13 +50,13 @@ export const handleUpload = async (file, setLoading, setUploadDisabled, fetchFil
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+    return true;
   } catch (error) {
     console.error("Error uploading file", error);
     const errorMessage = error.response?.data?.error || UPLOAD_ERROR;
     setUploadError(errorMessage);
     setUploadDisabled(false);
-  } finally {
-    setLoading(false);
+    return false;
   }
 };
 
